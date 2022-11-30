@@ -1,0 +1,181 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="1.0.0" author="misha.maruqyan">
+        <createTable tableName="user">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="surname" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="blood_type" type="ENUM('-1','-2','-3','-4','+1','+2','+3','+4')">
+                <constraints nullable="false"/>
+            </column>
+            <column name="height" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="weight" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="birthDate" type="TIMESTAMP" defaultValue="CURRENT_TIMESTAMP()">
+                <constraints nullable="false"/>
+            </column>
+            <column name="gender" type="ENUM('MALE','FEMALE')">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role" type="ENUM('ADMIN','USER')">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone_number" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.1" author="misha.maruqyan">
+        <createTable tableName="doctor">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="surname" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="patronymic" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="gender" type="ENUM('MALE','FEMALE')">
+                <constraints nullable="false"/>
+            </column>
+            <column name="birthDate" type="TIMESTAMP" defaultValue="CURRENT_TIMESTAMP()">
+                <constraints nullable="false"/>
+            </column>
+            <column name="specialization_id" type="int">
+                <constraints foreignKeyName="specialization_id_fk" referencedTableName="specialization"
+                             referencedColumnNames="id"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.2" author="misha.maruqyan">
+        <createTable tableName="address">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="country" type="ENUM('ARMENIA','ARCAX'">
+                <constraints nullable="false"/>
+            </column>
+            <column name="region"
+                    type="ENUM('SHIRAK','LORI','ARAGACOTN','KOTAYQ','ARMAVIR','ARARAT','VAYOC_DZOR','TAVUSH','SYUNIQ'">
+                <constraints nullable="false"/>
+            </column>
+            <column name="city" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="street" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="house_member" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="int">
+                <constraints foreignKeyName="user_id_fk" referencedTableName="user" referencedColumnNames="id"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.3" author="misha.maruqyan">
+        <createTable tableName="history">
+            <column name="id" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="injury_type" type="ENUM('FRAGMENTAL','FIREARMS')">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ancete_id" type="int">
+                <constraints foreignKeyName="ancete_id_fk" referencedTableName="ancete" referencedColumnNames="id"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.4" author="misha.maruqyan">
+        <createTable tableName="specialization">
+            <column name="id" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.5" author="misha.maruqyan">
+        <createTable tableName="ancete">
+            <column name="id" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="start_date" type="DATE 'mm/DD/yyyy hh:mm:ss'">
+                <constraints nullable="false"/>
+            </column>
+            <column name="end_date" type="DATE 'mm/DD/yyyy hh:mm:ss'">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="int">
+                <constraints foreignKeyName="user_id_fk" referencedTableName="user" referencedColumnNames="id"/>
+            </column>
+            <column name="doctor" type="int">
+                <constraints foreignKeyName="doctor_id_fk" referencedTableName="doctor" referencedColumnNames="id"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.6" author="misha.maruqyan">
+        <createTable tableName="register_time">
+            <column name="id" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="date" type="DATE 'mm/DD/yyyy hh:mm:ss'">
+                <constraints nullable="false"/>
+            </column>
+            <column name="active" type="tinyint(1)" defaultValue="0">
+            </column>
+            <column name="user_id" type="int">
+                <constraints foreignKeyName="user_id_fk" referencedTableName="user" referencedColumnNames="id"/>
+            </column>
+            <column name="doctor_id" type="int">
+                <constraints foreignKeyName="doctor_id_fk" referencedTableName="doctor" referencedColumnNames="id"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
+
+
+
+
+
+
+
+
+
+
+
+
+
