@@ -1,6 +1,7 @@
-package entity;
+package com.example.healthcenterforsoldiers.entity;
 
 
+import constants.InjuryType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,5 +22,8 @@ public class History {
     private int id;
     @Enumerated
     private InjuryType injuryType;
+    private String description;
+    @ManyToOne
+    private Aniceta aniceta;
 
 }
